@@ -1,27 +1,16 @@
-name: deploy-aws-lambda
-on:
-  push:
-    branches:
-      - main
+name: deploy to lambda
+on: [push]
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  deploy_source:
+    name: build and deploy lambda
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [12.x]
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v1
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install Dependencies
-        run: npm install
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-          function_name: POC-lamda
-
+      - name: npm install and build
