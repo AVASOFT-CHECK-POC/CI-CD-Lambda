@@ -1,10 +1,11 @@
-.PHONY: all
-all: build
-
-PKG = main
-
-ZIPNAME = build.zip
-
-.PHONY: lambda
-lambda:
-	GOOS=linux GOARCH=amd64 go build -o main main.go
+build:
+   image: node:latest
+   stage: build
+   only:
+     - main
+   scripts:
+     - npm install
+     - CI=false npm run-script build  //To avoid warnings
+   artifacts:
+     paths:
+       - ./build
