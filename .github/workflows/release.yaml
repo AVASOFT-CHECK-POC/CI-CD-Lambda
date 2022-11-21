@@ -1,12 +1,14 @@
 name: deploy-aws-lambda
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
-  deploy_source:
-    name: build and deploy lambda
+  deploy:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [14.x]
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: Use Node.js ${{ matrix.node-version }}
@@ -14,21 +16,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Dependencies
-        run: |
-          npm install
-          npm run build --if-present
-        env:
-          CI: true
-      - name: zip
-        uses: montudor/action-zip@v0.1.0
-        with:
-          args: zip -qq -r ./bundle.zip ./
-      #- name: default deploy
+        run: npm install
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
           function_name: POC-lamda
-          zip_file: bundle.zip
+
