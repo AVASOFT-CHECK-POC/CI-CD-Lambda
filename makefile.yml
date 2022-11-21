@@ -1,11 +1,1 @@
-build:
-   image: node:latest
-   stage: build
-   only:
-     - main
-   scripts:
-     - npm install
-     - CI=false npm run-script build  //To avoid warnings
-   artifacts:
-     paths:
-       - ./build
+
