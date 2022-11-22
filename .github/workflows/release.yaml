@@ -27,6 +27,6 @@ jobs:
           function_name: POC-lamda
           zip_file: example/deployment.zip
           memory_size: 128
-          timeout: 10
+          timeout: 15
           handler: main
           runtime: Go 1.x
