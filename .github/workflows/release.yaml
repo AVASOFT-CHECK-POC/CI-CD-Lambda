@@ -1,34 +1,33 @@
-name: deploy-aws-lambda
-on:
-  push:
-    branches:
-      - main
+name: deploy to lambda
+on: [push]
 jobs:
-  deploy:
+
+  deploy_zip:
+    name: deploy lambda function
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        go-version: [1.13.x]
     steps:
-      - uses: actions/checkout@master
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: checkout source code
+        uses: actions/checkout@v1
+      - name: Install Go
+        uses: actions/setup-go@v1
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: npm install and build
-        run: npm install
-          npm ci
-          npm run build --if-present
-      - name: zip
-        uses: montudor/action-zip@v0.1.0
+          go-version: ${{ matrix.go-version }}
+      - name: Build binary
+        run: |
+          cd example && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -a -o main main.go && zip deployment.zip main
+      - name: default deploy
+        uses: appleboy/lambda-action@master
         with:
-          args: zip -qq -r ./bundle.zip ./
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-          function_name: POC-lamda
-          zip_file: bundle.zip
-          #
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          function_name: gorush
+          zip_file: example/deployment.zip
+          memory_size: 128
+          timeout: 10
+          handler: foobar
+          role: arn:aws:iam::xxxxxxxxxxx:role/test1234
+          runtime: nodejs12.x
