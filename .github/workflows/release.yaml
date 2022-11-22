@@ -15,12 +15,14 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: ${{ matrix.go-version }}
+      - name: pwd
+        run: |
+          pwd
       - name: create directory
         run: |
           mkdir example
       - name: Build binary
         run: |
-          pwd
           cd example && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -a -o main main.go && zip deployment.zip main
       - name: default deploy
         uses: aws-actions/configure-aws-credentials@v1
