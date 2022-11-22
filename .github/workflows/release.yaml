@@ -31,4 +31,3 @@ jobs:
           aws-region: us-east-1
           function_name: POC-lamda
           zip_file: bundle.zip
-#
