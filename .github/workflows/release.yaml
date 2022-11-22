@@ -32,4 +32,3 @@ jobs:
           function_name: POC-lamda
           zip_file: bundle.zip
           
-          #
