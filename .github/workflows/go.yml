@@ -22,7 +22,7 @@ jobs:
         go-version: 1.18
 
     - name: Build
-      run: go build -v -a -o main main.go
+      run: GOOS=linux go build -v -a -o main main.go
       
     - name: list directory
       run: ls
