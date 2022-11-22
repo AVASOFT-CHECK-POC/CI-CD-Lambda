@@ -26,7 +26,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
           function_name: POC-lamda
-          zip_file: deployment.zip
+          zip_file: example/deployment.zip
           memory_size: 128
           timeout: 15
           handler: main
