@@ -29,3 +29,6 @@ jobs:
       
     - name: artifact gen
       run: zip deployment.zip main
+      
+    - name: list directory post build
+      run: ls
