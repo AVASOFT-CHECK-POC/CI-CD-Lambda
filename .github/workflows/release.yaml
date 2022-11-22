@@ -16,6 +16,7 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
       - name: create directory
+        run: |
           mkdir example
       - name: Build binary
         run: |
