@@ -29,9 +29,10 @@ jobs:
         echo $CGO_ENABLED
         echo $GOOS
         echo $GOARCH
+        $CGO_ENABLED $GOOS $GOARCH go build -v -a -o main main.go
 
-    - name: Build
-      run: $CGO_ENABLED $GOOS $GOARCH go build -v -a -o main main.go
+#     - name: Build
+#       run: $CGO_ENABLED $GOOS $GOARCH go build -v -a -o main main.go
       
     - name: list directory
       run: ls
