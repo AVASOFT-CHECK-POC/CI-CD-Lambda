@@ -1,6 +1,3 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
 name: Go
 
 on:
@@ -24,21 +21,21 @@ jobs:
     - name: Download the lambda
       run: go get github.com/aws/aws-lambda-go/lambda
         
-    - name: Set Up Env Variables
-      run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+#     - name: Set Up Env Variables
+#       run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64
       
-    - name: Verify Env Variables
+    - name: Go Build
       run: |
         CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -a -o main main.go
       
-    - name: list directory
-      run: ls
+#     - name: list directory
+#       run: ls
       
     - name: artifact gen
       run: zip deployment.zip main
       
-    - name: list directory post build
-      run: ls
+#     - name: list directory post build
+#       run: ls
       
     - name: deploy
       uses: aws-actions/configure-aws-credentials@v1
