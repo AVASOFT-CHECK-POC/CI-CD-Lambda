@@ -56,4 +56,4 @@ jobs:
 #           handler: main
 #           runtime: Go 1.x
     - name: Zip file
-      run: aws lambda update-function-code --function-name POC-lamda --zip-file fileb://path/to/deployment.zip 
+      run: aws lambda update-function-code --function-name POC-lamda --zip-file fileb://deployment.zip 
