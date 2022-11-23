@@ -20,22 +20,13 @@ jobs:
         
     - name: Download the lambda
       run: go get github.com/aws/aws-lambda-go/lambda
-        
-#     - name: Set Up Env Variables
-#       run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64
       
     - name: Go Build
       run: |
         CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -a -o main main.go
       
-#     - name: list directory
-#       run: ls
-      
     - name: artifact gen
       run: zip deployment.zip main
-      
-#     - name: list directory post build
-#       run: ls
       
     - name: deploy
       uses: aws-actions/configure-aws-credentials@v1
