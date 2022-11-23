@@ -26,6 +26,7 @@ jobs:
       
     - name: Verify Env Variables
       run: |
+        CGO_ENABLED=0 GOOS=linux GOARCH=amd64
         echo $CGO_ENABLED
         echo $GOOS
         echo $GOARCH
