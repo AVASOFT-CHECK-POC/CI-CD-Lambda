@@ -36,4 +36,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
          
     - name: Zip file
-      run: aws lambda update-function-code --function-name:${{ secrets.AWS_FUNCTION_NAME }} --zip-file fileb://deployment.zip 
+      run: aws lambda update-function-code --function-name ${{ secrets.AWS_FUNCTION_NAME }} --zip-file fileb://deployment.zip 
