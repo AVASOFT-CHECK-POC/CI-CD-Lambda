@@ -50,7 +50,7 @@ jobs:
           timezone: US/Eastern
 
   notify-team-failure:
-    if: ${{ failure() }}
+    if: failure()
     #needs: [deploy]
     runs-on: ubuntu-latest
     steps:
