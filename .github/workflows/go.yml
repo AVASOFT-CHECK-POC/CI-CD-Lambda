@@ -46,8 +46,9 @@ jobs:
         timezone: US/Eastern 
         
   notify-team-failure:
-    runs-on: ubuntu-latest
     if: failure()
+    #needs: [deploy]
+    runs-on: ubuntu-latest
     steps:
       - name: Team Notify of Failure
         uses: toko-bifrost/ms-teams-deploy-card@3.1.2
