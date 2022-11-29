@@ -23,7 +23,7 @@ jobs:
       
     - name: Go Build
       run: |
-      #  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -a -o main main.go
+        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -a -o main main.go
       
     - name: artifact gen
       run: zip deployment.zip main
@@ -38,20 +38,17 @@ jobs:
     - name: Zip file
       run: aws lambda update-function-code --function-name ${{ secrets.AWS_FUNCTION_NAME }} --zip-file fileb://deployment.zip 
     
-    - name: Team Notify of Success
-      uses: toko-bifrost/ms-teams-deploy-card@3.1.2
-      with:
-        github-token: ${{ github.token }}
-        webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-        timezone: US/Eastern
-    
-#     - name: Team Notify of Failure
-#       if: ${{ failure() }}
+#     - name: Team Notify of Success
 #       uses: toko-bifrost/ms-teams-deploy-card@3.1.2
 #       with:
 #         github-token: ${{ github.token }}
 #         webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
 #         timezone: US/Eastern
-
-
-#
+    
+    - name: Team Notify of Failure
+      if: ${{ failure() }}
+      uses: toko-bifrost/ms-teams-deploy-card@3.1.2
+      with:
+        github-token: ${{ github.token }}
+        webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+        timezone: US/Eastern
