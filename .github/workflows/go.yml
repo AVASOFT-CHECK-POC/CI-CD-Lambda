@@ -47,15 +47,8 @@ jobs:
           github-token: ${{ github.token }}
           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           deploy-card: true
-          title: 'Deployment Started'
+          title: 'BTMS `${{ inputs.ref }}` build (${{ github.actor }}): Started...'
           color: 'info'
-#         uses: simbo/msteams-message-card-action@v1
-#         with:
-#           github-token: ${{ github.token }}
-#           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-#           title: Started!
-#           message:  "BTMS `${{ inputs.ref }}` build (${{ github.actor }}): Started..."
-#           color: 28a745
 
   notify-team-success:
     needs: [build]
@@ -67,16 +60,9 @@ jobs:
           github-token: ${{ github.token }}
           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           deploy-card: true
-          title: 'Deployment Successful'
+          title: 'BTMS `${{ inputs.ref }}` build (${{ github.actor }}) completed successfully. Image was pushed to ECR and is available to be deployed. :white_check_mark:'
           color: 'success'
-#         uses: simbo/msteams-message-card-action@v1
-#         with:
-#           github-token: ${{ github.token }}
-#           webhook: ${{ secrets.MS_TEAMS_WEBHOOK_URI }} 
-#           title: Success!
-#           message: "BTMS `${{ inputs.ref }}` build (${{ github.actor }}) completed successfully. Image was pushed to ECR and is available to be deployed. :white_check_mark:"
-#           color: 33ff66
-
+          
   notify-team-failure:
     if: failure()
     needs: [build]
@@ -88,5 +74,5 @@ jobs:
           github-token: ${{ github.token }}
           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           deploy-card: true
-          title: 'Deployment Failed'
+          title: 'BTMS `${{ inputs.ref }}` build (${{ github.actor }}): Failure :o:'
           color: 'failure'
