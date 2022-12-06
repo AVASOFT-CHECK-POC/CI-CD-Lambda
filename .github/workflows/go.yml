@@ -38,64 +38,55 @@ jobs:
     - name: Zip file
       run: aws lambda update-function-code --function-name ${{ secrets.AWS_FUNCTION_NAME }} --zip-file fileb://deployment.zip 
       
+  notify-team-start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Team Notify Start
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: 'Deployment Started'
+          color: 'info'
+#         uses: simbo/msteams-message-card-action@v1
+#         with:
+#           github-token: ${{ github.token }}
+#           webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+#           title: Started!
+#           message:  "BTMS `${{ inputs.ref }}` build (${{ github.actor }}): Started..."
+#           color: 28a745
+
   notify-team-success:
-    #needs: [deploy]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Team Notify of Success
-        uses: toko-bifrost/ms-teams-deploy-card@3.1.2
+        uses: mikesprague/teams-incoming-webhook-action@v1
         with:
           github-token: ${{ github.token }}
-          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          timezone: US/Eastern
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: 'Deployment Successful'
+          color: 'success'
+#         uses: simbo/msteams-message-card-action@v1
+#         with:
+#           github-token: ${{ github.token }}
+#           webhook: ${{ secrets.MS_TEAMS_WEBHOOK_URI }} 
+#           title: Success!
+#           message: "BTMS `${{ inputs.ref }}` build (${{ github.actor }}) completed successfully. Image was pushed to ECR and is available to be deployed. :white_check_mark:"
+#           color: 33ff66
 
   notify-team-failure:
     if: failure()
-    #needs: [deploy]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Team Notify of Failure
-        uses: toko-bifrost/ms-teams-deploy-card@3.1.2
+        uses: mikesprague/teams-incoming-webhook-action@v1
         with:
           github-token: ${{ github.token }}
-          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          timezone: US/Eastern
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-#     - name: Team Notify of Success
-#       uses: toko-bifrost/ms-teams-deploy-card@3.1.2
-#       with:
-#         github-token: ${{ github.token }}
-#         webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-#         timezone: US/Eastern 
-        
-#   notify-team-failure:
-#     if: failure()
-#     #needs: [deploy]
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Team Notify of Failure
-#       uses: toko-bifrost/ms-teams-deploy-card@3.1.2
-#       with:
-#         github-token: ${{ github.token }}
-#         webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-#         timezone: US/Eastern
-          
-        
+          webhook-url: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          deploy-card: true
+          title: 'Deployment Failed'
+          color: 'failure'
