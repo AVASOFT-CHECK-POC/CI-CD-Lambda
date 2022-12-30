@@ -51,6 +51,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v1 
       with: 
         audience: ${{ steps.getversion.outputs.version }}
+        aws-region:  ${{secrets.AWS_REGION }}
       
 
 #     - name: Configure AWS credentials 
