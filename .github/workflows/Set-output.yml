@@ -49,7 +49,7 @@ jobs:
       run: echo "version=$(cat app-version)" >> $GITHUB_OUTPUT 
     - name: Configure AWS credentials 
       #uses: aws-actions/configure-aws-credentials@v1 
-      with: 
+      run: | 
         audience: ${{ steps.getversion.outputs.version }}
         #aws-region:  ${{secrets.AWS_REGION }}
       
