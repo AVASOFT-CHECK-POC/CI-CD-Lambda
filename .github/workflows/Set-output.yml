@@ -50,7 +50,7 @@ jobs:
     - name: Configure AWS credentials 
       uses: aws-actions/configure-aws-credentials@v1 
       with: 
-        aws: ${{ steps.getversion.outputs.version }}
+        audience: ${{ steps.getversion.outputs.version }}
       
 
 #     - name: Configure AWS credentials 
