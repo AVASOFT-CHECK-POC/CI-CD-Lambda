@@ -36,7 +36,7 @@ jobs:
 
     if: github.ref == 'refs/heads/dev'
 
-    runs-on: [self-hosted, runner-2]
+    runs-on: ubuntu-latest #[self-hosted, runner-2]
 
     env: 
      BRANCH_NAME: $(echo $GITHUB_REF | cut -d'/' -f 3) 
