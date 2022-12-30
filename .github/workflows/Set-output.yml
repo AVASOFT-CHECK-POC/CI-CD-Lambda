@@ -50,7 +50,7 @@ jobs:
     - name: Configure AWS credentials 
       #uses: aws-actions/configure-aws-credentials@v1 
       run: | 
-        docker build . --file Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.getversion.outputs.version }}
+        docker build . --file Dockerfile -t ${{ steps.getversion.outputs.version }}
         #aws-region:  ${{secrets.AWS_REGION }}
       
 
