@@ -42,7 +42,7 @@ jobs:
     - name: Configure AWS credentials 
       #uses: aws-actions/configure-aws-credentials@v1 
       run: | 
-        docker build . --file Dockerfile -t ${{ GITHUB_OUTPUT }} 
+        docker build . --file Dockerfile -t $GITHUB_OUTPUT
 #${{ steps.getversion.outputs.version }}
 
       
