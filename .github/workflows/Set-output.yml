@@ -39,9 +39,6 @@ jobs:
     - name: Read VERSION file 
       id: getversion 
       run: echo "version=$(cat app-version)" >> $GITHUB_OUTPUT 
-    #- name: Set color
-      #id: random-color-generator
-      #run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
-    - name: Get color
-      run: echo "The selected color is ${{ steps.getversion.outputs.version }}"
+    - name: Checking
+      run: echo "The version is ${{ steps.getversion.outputs.version }}"
    
