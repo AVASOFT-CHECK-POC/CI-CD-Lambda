@@ -33,15 +33,7 @@ jobs:
   Dev_Image_Build: 
   
     needs: code_coverage
-
-    #if: github.ref == 'refs/heads/dev'
-
     runs-on: ubuntu-latest #[self-hosted, runner-2]
-
-#     env: 
-#      BRANCH_NAME: $(echo $GITHUB_REF | cut -d'/' -f 3) 
-#      COMMIT_ID: $(echo $GITHUB_SHA | cut -c1-7)
-
     steps: 
     - uses: actions/checkout@v3 
 
@@ -50,8 +42,9 @@ jobs:
     - name: Configure AWS credentials 
       #uses: aws-actions/configure-aws-credentials@v1 
       run: | 
-        docker build . --file Dockerfile -t ${{ GITHUB_OUTPUT }} #${{ steps.getversion.outputs.version }}
-        #aws-region:  ${{secrets.AWS_REGION }}
+        docker build . --file Dockerfile -t ${{ GITHUB_OUTPUT }} 
+#${{ steps.getversion.outputs.version }}
+
       
 
 #     - name: Configure AWS credentials 
