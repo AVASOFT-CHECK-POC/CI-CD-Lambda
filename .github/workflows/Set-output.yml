@@ -42,7 +42,6 @@ jobs:
     - name: Configure AWS credentials 
       #uses: aws-actions/configure-aws-credentials@v1 
       run: | 
-        run: | 
         docker build . --file Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_OUTPUT-${GITHUB_RUN_NUMBER}-${{env.COMMIT_ID}}-${{env.BRANCH_NAME}}
 #docker build . --file Dockerfile -t $GITHUB_OUTPUT
 #${{ steps.getversion.outputs.version }}
